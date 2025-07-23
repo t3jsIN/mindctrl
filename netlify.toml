@@ -4,15 +4,3 @@
 
 [build.environment]
   NODE_VERSION = "18"
-
-# SvelteKit needs different redirect handling
-[[redirects]]
-  from = "/*"
-  to = "/200.html"
-  status = 200
-
-# Fallback for any remaining routes
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
