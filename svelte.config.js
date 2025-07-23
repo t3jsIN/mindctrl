@@ -7,15 +7,9 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			// Use edge functions for better performance
 			edge: false,
-			// Ensure proper splitting
-			split: true
-		}),
-		// Important: Configure service worker properly
-		serviceWorker: {
-			register: false // Let vite-pwa handle this
-		}
+			split: false // Try without splitting
+		})
 	}
 };
 
