@@ -6,7 +6,7 @@
   import SleepPanel from "$lib/components/SleepPanel.svelte";
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
-  import { FirebaseStorage, startAutoSync, stopAutoSync } from '$lib/firebase.ts';
+  import { FirebaseStorage, startAutoSync, stopAutoSync } from '$lib/firebase.js';
 
   let isOnline = true;
   let lastSyncTime = '';
@@ -16,7 +16,7 @@
     goto('/taskmaster');
   }
 
-  function handleWakeStateChange(isAwake: boolean) {
+  function handleWakeStateChange(isAwake) {
     console.log('Wake state changed:', isAwake);
     
     // Trigger auto-sync when wake state changes
@@ -28,6 +28,7 @@
       }, 1000);
     }
   }
+
 
   // Force sync all data
   async function forceSync() {
@@ -58,9 +59,13 @@
 
   // Initialize sync status
   function initSyncStatus() {
-    const lastSync = localStorage.getItem('last_sync_time');
-    if (lastSync) {
-      lastSyncTime = new Date(lastSync).toLocaleTimeString();
+    try {
+      const lastSync = localStorage.getItem('last_sync_time');
+      if (lastSync) {
+        lastSyncTime = new Date(lastSync).toLocaleTimeString();
+      }
+    } catch (error) {
+      console.error('Error initializing sync status:', error);
     }
   }
 

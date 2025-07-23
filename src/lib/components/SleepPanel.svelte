@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import BorderBeam from "./BorderBeam.svelte";
-  import { FirebaseStorage } from '../firebase.ts';
+  import { FirebaseStorage } from '../firebase.js';
   
   export let onWakeStateChange: (isAwake: boolean) => void = () => {};
   
