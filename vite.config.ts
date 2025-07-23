@@ -8,8 +8,15 @@ export default defineConfig({
 		SvelteKitPWA({
 			strategies: 'generateSW',
 			registerType: 'autoUpdate',
+			// Fix: Disable dev mode for production
+			devOptions: {
+				enabled: false, // Changed from true
+				type: 'module'
+			},
 			workbox: {
 				globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
+				// Fix: Add proper navigation fallback
+				navigateFallback: null, // Let SvelteKit handle routing
 				runtimeCaching: [
 					{
 						urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
@@ -25,7 +32,7 @@ export default defineConfig({
 							cacheName: 'google-fonts-webfonts',
 							expiration: {
 								maxEntries: 30,
-								maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+								maxAgeSeconds: 60 * 60 * 24 * 365
 							}
 						}
 					}
@@ -56,10 +63,6 @@ export default defineConfig({
 					}
 				],
 				categories: ['productivity', 'health', 'lifestyle']
-			},
-			devOptions: {
-				enabled: true,
-				type: 'module'
 			}
 		})
 	],
@@ -67,8 +70,9 @@ export default defineConfig({
 		port: 5173,
 		host: true
 	},
-	// Add better TypeScript support
-	esbuild: {
-		target: 'esnext'
+	build: {
+		// Fix: Ensure proper build output
+		target: 'esnext',
+		sourcemap: false // Disable sourcemaps for production
 	}
 });
